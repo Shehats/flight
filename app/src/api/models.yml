@@ -1,0 +1,14 @@
+Base:
+  baseUrl: http://localhost:9000/
+FlightModel:
+  getUrl: flights
+  getOneUrl: flights
+  createUrl: flights
+  updateUrl: flights
+  deleteUrl: flights
+  queryParams:
+    - q
+    - dest
+    - origin
+    - airport
+  param: id
