@@ -1,0 +1,14 @@
+{
+  "name": "flight-api",
+  "version": "0.0.1",
+  "description": "test application utilizing rest and qraphQl in express ts",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "saleh shehata",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
