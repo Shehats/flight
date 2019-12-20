@@ -1,15 +1,11 @@
 import * as dotenv from 'dotenv'
-import * as express from 'express'
 // @ts-ignore
 import path from 'path'
+import { startApp } from './app'
 
 dotenv.config()
 
 // @ts-ignore
-const port = "9000"
-const app = express()
-console.log(port)
-app.listen(port, () => {
-    // tslint:disable-next-line:no-console
-    console.log( `server started at http://localhost:${ port }` );
-})
+const port = process.env.SERVER_PORT || "9000"
+
+startApp(port)
