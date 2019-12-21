@@ -1,1 +1,1 @@
-export { DataService } from './data-serv'
+export { DataService, getContextDataService} from './data-serv'

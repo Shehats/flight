@@ -1,3 +1,3 @@
 export class Token{
-  constructor(private accessToken: string, private refreshToken: string){}
+  constructor(public userId: string, public username: string, email: string, public expires: number){}
 }

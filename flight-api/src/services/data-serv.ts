@@ -6,8 +6,11 @@ import { DBConstants } from './constants'
 export class DataService {
   private client: redis.RedisClient
 
-  constructor(redisPassword: string) {
-    this.client = redis.createClient({ password: redisPassword })
+  constructor(redisPassword?: string) {
+    let opts: redis.ClientOpts = is(DBConstants.REDIS_CONFIG) || {
+      password: redisPassword || is(DBConstants.REDIS_PASSWORD)
+    }
+    this.client = redis.createClient(opts)
   }
 
   public save(data: any): Promise<any> {
