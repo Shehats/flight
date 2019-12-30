@@ -1,3 +1,8 @@
-export class Token{
-  constructor(public userId: string, public username: string, email: string, public expires: number){}
+export interface Token {
+  userId?: string, 
+  username?: string, 
+  email?: string,  
+  expires?: number,
+  accessToken?: string,
+  refreshToken?: string
 }

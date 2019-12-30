@@ -39,7 +39,7 @@ export class User {
 
   
   public get LoginUser() : LoginUser {
-    return this.LoginUser
+    return this.loginUser
   }
 
   public get FirstName() : string {

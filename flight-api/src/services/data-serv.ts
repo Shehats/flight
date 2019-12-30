@@ -35,6 +35,11 @@ export class DataService {
     })
   }
 
+  public findByKey <T> (keyName: string, tClass: new (...args: any[]) => T): Promise<any> {
+    this.client.HGET()
+    return null
+  }
+
   public delete(id: string): Promise<any> {
     return new Promise((resolve, reject) => {
       let deleted = this.client.del(id)

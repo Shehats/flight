@@ -1,16 +1,20 @@
-import * as Auth0Strategy from 'passport-auth0'
 import * as passport from 'passport'
 import { getContextDataService, DataService } from '../services'
 import { Strategy, ExtractJwt, StrategyOptions, VerifiedCallback } from 'passport-jwt'
 import uuid = require('uuid/v4')
 import { Token } from 'src/models'
+import { EasySingleton } from 'easy-injectionjs'
+import { AuthConfig } from '.'
 
-export class JWTStrategyConfig {
+@EasySingleton()
+export class JWTStrategyConfig implements AuthConfig{
   private strategy: Strategy
+  private secretOrKeyProvider: string
 
-  constructor(issuer: string, audience: string, clientSecret: string, callbackURL: string, algorithms?: string[]) {
+  constructor(issuer: string, audience: string, algorithms?: string[]) {
+    let secret = uuid().toString()
     let StrategyOpts: StrategyOptions = {
-      secretOrKeyProvider: uuid().toString(),
+      secretOrKeyProvider: secret,
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       issuer: issuer,
       audience: audience,
@@ -26,6 +30,12 @@ export class JWTStrategyConfig {
       let dataService: DataService = getContextDataService()
       return dataService.find(payload.userId).then(val => done(null, val)).catch(err => done(new Error("User doesn't exist")))
     })
+
+    this.secretOrKeyProvider = secret
     passport.use(this.strategy)
+  }
+  
+  public get SecretOrKeyProvider() : string {
+    return this.secretOrKeyProvider
   }
 }
