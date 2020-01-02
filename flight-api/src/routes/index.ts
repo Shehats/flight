@@ -1,6 +1,6 @@
-import { Application } from 'express'
+import { Express } from 'express'
 
 export abstract class Route{
-  constructor(protected app: Application){}
+  constructor(protected app: Express){}
   abstract createRoutes()
 }

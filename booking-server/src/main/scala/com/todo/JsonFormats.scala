@@ -1,6 +1,6 @@
-package com.example
+package com.todo
 
-import com.example.UserRegistry.ActionPerformed
+import com.todo.UserRegistry.ActionPerformed
 
 //#json-formats
 import spray.json.DefaultJsonProtocol

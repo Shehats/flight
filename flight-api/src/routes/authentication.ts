@@ -18,6 +18,19 @@ export class AuthenticationRoutes extends Route {
     this.app.post('/login', (req: Request, res: Response) => {
       let b = req.body
       let user = new LoginUser
+      dataService.save(user).then(id => {
+        let token = <Token> {
+          userId: id,
+          username: user.Username,
+          email: user.Email,
+          expires: Date.now() + 604800000
+        }
+        let jwtToken = jsonwebtoken.sign(token, this.jwtConfig.SecretOrKeyProvider)
+        jsonwebtoken.decode
+        res.status(201).json(jwtToken)
+      }).catch(err => {
+        res.status(401)
+      })
     })
 
     this.app.post('/register', (req: Request, res: Response) => {

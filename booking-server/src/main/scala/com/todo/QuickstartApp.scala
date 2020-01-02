@@ -1,4 +1,4 @@
-package com.example
+package com.todo
 
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.adapter._

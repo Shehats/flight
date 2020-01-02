@@ -1,4 +1,4 @@
-package com.example
+package com.todo
 
 //#user-registry-actor
 import akka.actor.typed.ActorRef

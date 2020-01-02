@@ -1,43 +1,51 @@
-import * as redis from 'redis'
 import * as uuidv4 from 'uuid/v4'
 import { is, Easily } from 'easy-injectionjs'
 import { DBConstants } from './constants'
+import * as Redis from 'ioredis'
 
 export class DataService {
-  private client: redis.RedisClient
+  private client: Redis.Redis
 
-  constructor(redisPassword?: string) {
-    let opts: redis.ClientOpts = is(DBConstants.REDIS_CONFIG) || {
-      password: redisPassword || is(DBConstants.REDIS_PASSWORD)
-    }
-    this.client = redis.createClient(opts)
+  constructor(opts: Redis.RedisOptions = is(DBConstants.REDIS_CONFIG) || {
+                                          port: 6379,
+                                          host: "192.168.1.1",
+                                          password: is(DBConstants.REDIS_PASSWORD)
+                                          }) {
+    this.client = new Redis(opts)
   }
 
-  public save(data: any): Promise<any> {
+  public save<T>(data: T, key?:string): Promise<T> {
     return new Promise((resolve, reject) => {
-      this.client.set(uuidv4(), JSON.stringify(data), (err, reply) => {
+      // some duck typing to get id
+      let idFields = Object.keys(data).filter(x => x.match(new RegExp('.*(i|I)(d|D)')))
+
+      if (idFields || idFields.length < 1) {
+        throw new Error("Data doesn't have an id field.")
+      }
+
+      let idField: string =  idFields.length == 1 ? idFields[0]: idFields.reduce((x,y) => (x.length < y.length) ? x:y)
+      let id: string = uuidv4()
+      data[idField] = id
+
+      this.client.set((key) ? key: id, JSON.stringify(data), (err: Error, _: String) => {
         if (err) {
-          return reject(err)
+          reject(err)
+        } else {
+          resolve(data)
         }
-        return resolve(reply)
       })
     })
   }
 
   public find(id: string): Promise<any>{
     return new Promise((resolve, reject) => {
-      this.client.get(id, (err, reply) => {
+      this.client.get(id, (err, res) => {
         if (err) {
           return reject(err)
         }
-        return resolve(reply)
+        return resolve(JSON.parse(res))
       })
     })
-  }
-
-  public findByKey <T> (keyName: string, tClass: new (...args: any[]) => T): Promise<any> {
-    this.client.HGET()
-    return null
   }
 
   public delete(id: string): Promise<any> {

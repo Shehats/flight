@@ -34,3 +34,9 @@ export enum JWTAuthConstants {
   JWT_AUDIENCE='JWT_AUDIENCE',
   JWT_ALGORITHMS='JWT_ALGORITHMS'
 }
+
+export enum ClientConstants {
+  USER_SERVER='USER_SERVER',
+  HTTP_CLIENT='HTTP_CLIENT',
+  SAVE_USER_URL='SAVE_USER_URL'
+}
