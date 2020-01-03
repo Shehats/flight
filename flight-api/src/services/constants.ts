@@ -32,7 +32,8 @@ export enum TwitterAuthConstants {
 export enum JWTAuthConstants {
   JWT_ISSUER='JWT_ISSUER',
   JWT_AUDIENCE='JWT_AUDIENCE',
-  JWT_ALGORITHMS='JWT_ALGORITHMS'
+  JWT_ALGORITHMS='JWT_ALGORITHMS',
+  JWT_SECRET='JWT_SECRET'
 }
 
 export enum ClientConstants {

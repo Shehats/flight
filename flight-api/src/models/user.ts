@@ -6,12 +6,12 @@ export interface LoginUser {
 }
 
 export interface User {
-  id: string,
+  id?: string,
   username?: string,
   email: string,
   password?: string,
   firstName: string, 
   lastName: string, 
-  age: number
+  birthday: Date
 }
 
